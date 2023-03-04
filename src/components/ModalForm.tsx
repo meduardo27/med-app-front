@@ -1,4 +1,3 @@
-import api from "@/services/api";
 import {
   Box,
   Button,
@@ -7,6 +6,8 @@ import {
   FormLabel,
   HStack,
   Input,
+  InputGroup,
+  InputLeftAddon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,13 +18,13 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Toast,
   useToast,
 } from "@chakra-ui/react";
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import api from "@/services/api";
 
 import * as yup from "yup";
 
@@ -56,7 +57,6 @@ export default function ModalForm({
   const [idEspecialidade, setIdEspecialidade] = useState<any>([]);
   const [idUnidade, setIdUnidade] = useState<any>([]);
   const [idProfissional, setIdProfissional] = useState<any>([]);
-  const [hourSelected, setHourSelected] = useState<any>([]);
   const toast = useToast();
 
   const schema = yup.object().shape({
@@ -127,7 +127,22 @@ export default function ModalForm({
       .toString()
       .padStart(2, "0") +
     "-" +
-    new Date(dataEdit.consulta.dataConsulta).getDate();
+    new Date(dataEdit.consulta.dataConsulta).getDate() +
+    " " +
+    new Date(dataEdit.consulta.dataConsulta)
+      .getHours()
+      .toString()
+      .padStart(2, "0") +
+    ":" +
+    new Date(dataEdit.consulta.dataConsulta)
+      .getMinutes()
+      .toString()
+      .padStart(2, "0") +
+    ":" +
+    new Date(dataEdit.consulta.dataConsulta)
+      .getSeconds()
+      .toString()
+      .padStart(2, "0");
 
   const handleUpdate = async (data: any) => {
     try {
@@ -161,7 +176,7 @@ export default function ModalForm({
     <>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent w="550px">
           <ModalHeader>Editar Consulta Marcada</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -201,12 +216,16 @@ export default function ModalForm({
                 <Box w="100%">
                   <FormControl mb={2}>
                     <FormLabel htmlFor="numeroCelular">Celular</FormLabel>
-                    <Input
-                      id="numeroCelular"
-                      {...register("numeroCelular", {
-                        value: dataEdit.consulta.numeroCelular,
-                      })}
-                    />
+                    <InputGroup>
+                      <InputLeftAddon children="+55" />
+                      <Input
+                        type="tel"
+                        id="numeroCelular"
+                        {...register("numeroCelular", {
+                          value: dataEdit.consulta.numeroCelular,
+                        })}
+                      />
+                    </InputGroup>
                     {errors && errors.numeroCelular && (
                       <FormHelperText color="red">
                         {errors.numeroCelular.message &&
@@ -216,10 +235,13 @@ export default function ModalForm({
                   </FormControl>
                 </Box>
               </HStack>
-              <Box w="100%">
+              <Box w="100%" mb={2}>
                 <FormControl>
                   <FormLabel>Gênero</FormLabel>
-                  <RadioGroup defaultValue="Masculino">
+                  <RadioGroup
+                    defaultValue="Masculino"
+                    value={dataEdit.consulta.genero}
+                  >
                     <HStack spacing="24px">
                       <Radio
                         id="genero"
@@ -260,7 +282,7 @@ export default function ModalForm({
                     </FormLabel>
                     <Input
                       id="dataConsulta"
-                      type="date"
+                      type="datetime-local"
                       {...register("dataConsulta", {
                         value: dateFormat,
                       })}
@@ -273,39 +295,18 @@ export default function ModalForm({
                     )}
                   </FormControl>
                 </Box>
-                <Box w="100%">
-                  <FormControl>
-                    <FormLabel htmlFor="horarioConsulta">Horário</FormLabel>
-                    <Select
-                      placeholder="Selecione o horário"
-                      {...register("horarioConsulta", {
-                        value: hourSelected,
-                      })}
-                      onChange={(e) => setHourSelected(e.target.value)}
-                    >
-                      <option value="08:00:00">08:00</option>
-                      <option value="09:30:00">09:30</option>
-                      <option value="10:00:00">10:00</option>
-                      <option value="14:15:00">14:15</option>
-                    </Select>
-                    {errors && errors.especialidade && (
-                      <FormHelperText color="red">
-                        {errors.especialidade.message &&
-                          errors.especialidade.message}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                </Box>
               </HStack>
               <HStack spacing="4" mb={2}>
                 <FormControl>
                   <FormLabel htmlFor="especialidade">Especialidade</FormLabel>
                   <Select
                     placeholder="Selecione a especialidade"
-                    {...register("especialidade", {
-                      value: dataEdit.consulta.especialidade.id,
-                    })}
-                    onChange={(e) => setIdEspecialidade(e.target.value)}
+                    {...register("especialidade")}
+                    value={dataEdit.consulta.especialidade.id}
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setIdEspecialidade(e.target.value);
+                    }}
                   >
                     {comboEspecialidade.map((esp) => (
                       <option key={esp.id} value={esp.id}>
@@ -330,6 +331,7 @@ export default function ModalForm({
                       {...register("profissional", {
                         value: dataEdit.consulta.profissional,
                       })}
+                      value={dataEdit.consulta.profissional.id}
                       onChange={(e) => setIdProfissional(e.target.value)}
                     >
                       {comboProfissional.map((prof) => (
@@ -354,6 +356,7 @@ export default function ModalForm({
                       {...register("unidade", {
                         value: dataEdit.consulta.unidade.id,
                       })}
+                      value={dataEdit.consulta.unidade.id}
                       onChange={(e) => setIdUnidade(e.target.value)}
                     >
                       {comboUnidade.map((unid) => (

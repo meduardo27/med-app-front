@@ -1,4 +1,3 @@
-import api from "@/services/api";
 import {
   Button,
   Modal,
@@ -10,8 +9,10 @@ import {
   ModalOverlay,
   Toast,
 } from "@chakra-ui/react";
-import Router from "next/router";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import Router from "next/router";
+import api from "@/services/api";
 
 export default function ModalYesNo({
   data,
@@ -22,7 +23,6 @@ export default function ModalYesNo({
   onClose,
 }: any) {
   const [consultaId, setConsultaId] = useState(dataEdit.consulta.id);
-  const [dateFormat, setDateFormat] = useState("");
   const dtConsulta = new Date(dataEdit.consulta.dataConsulta);
 
   const handleDelete = async () => {
@@ -65,10 +65,20 @@ export default function ModalYesNo({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="green" mr={3} onClick={handleDelete}>
+            <Button
+              leftIcon={<CheckIcon />}
+              colorScheme="green"
+              mr={3}
+              onClick={handleDelete}
+            >
               Sim
             </Button>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
+            <Button
+              leftIcon={<CloseIcon />}
+              colorScheme="red"
+              mr={3}
+              onClick={onClose}
+            >
               Não
             </Button>
           </ModalFooter>

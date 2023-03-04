@@ -13,6 +13,8 @@ import {
   FormHelperText,
   useToast,
   Text,
+  InputGroup,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 
 import Router from "next/router";
@@ -23,6 +25,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import api from "@/services/api";
+import HeadPage from "@/components/HeadPage";
 
 export default function MarcarConsulta() {
   const DEFAULT_MESSAGE = "Campo Obrigatório";
@@ -131,183 +134,198 @@ export default function MarcarConsulta() {
   };
 
   return (
-    <Box h="100vh">
-      <Flex align="center" bg="#6a8bd9" justify="center" h="100%">
-        <Center
-          w="100%"
-          maxW={840}
-          bg="white"
-          top={100}
-          position="absolute"
-          borderRadius={5}
-          p="6"
-          mt={10}
-          boxShadow="0 1px 2px #ccc"
-        >
-          <form onSubmit={handleSubmit(handleCreate)}>
-            <Box w="100%">
-              <FormControl mb={2}>
-                <FormLabel htmlFor="nome">Nome Completo</FormLabel>
-                <Input id="nome" {...register("nome")} />
-                {errors && errors.nome && (
-                  <FormHelperText color="red">
-                    {errors.nome.message && errors.nome.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
-            </Box>
-            <Box w="100%">
-              <FormControl mb={2}>
-                <FormLabel htmlFor="dataNasc">Data de Nascimento</FormLabel>
-                <Input id="dataNasc" type="date" {...register("dataNasc")} />
-                {errors && errors.dataNasc && (
-                  <FormHelperText color="red">
-                    {errors.dataNasc.message && errors.dataNasc.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
-            </Box>
-            <HStack spacing="4">
+    <>
+      <HeadPage title="Marcar Consulta - Clínica Médica Paraná" />
+      <Box h="100vh">
+        <Flex align="center" bg="#6a8bd9" justify="center" h="100%">
+          <Center
+            w="100%"
+            maxW={840}
+            bg="white"
+            top={100}
+            position="absolute"
+            borderRadius={5}
+            p="6"
+            mt={10}
+            boxShadow="0 1px 2px #ccc"
+          >
+            <form onSubmit={handleSubmit(handleCreate)}>
               <Box w="100%">
                 <FormControl mb={2}>
-                  <FormLabel htmlFor="numeroCelular">Celular</FormLabel>
-                  <Input id="numeroCelular" {...register("numeroCelular")} />
-                  {errors && errors.numeroCelular && (
+                  <FormLabel htmlFor="nome">Nome Completo</FormLabel>
+                  <Input id="nome" {...register("nome")} />
+                  {errors && errors.nome && (
                     <FormHelperText color="red">
-                      {errors.numeroCelular.message &&
-                        errors.numeroCelular.message}
+                      {errors.nome.message && errors.nome.message}
                     </FormHelperText>
                   )}
                 </FormControl>
               </Box>
               <Box w="100%">
-                <FormControl>
-                  <FormLabel>Gênero</FormLabel>
-                  <RadioGroup defaultValue="Masculino">
-                    <HStack spacing="24px">
-                      <Radio
-                        id="genero"
-                        value="Masculino"
-                        {...register("genero")}
-                      >
-                        Masculino
-                      </Radio>
-                      <Radio
-                        id="genero"
-                        value="Feminino"
-                        {...register("genero")}
-                      >
-                        Feminino
-                      </Radio>
-                      <Radio id="genero" value="Outro" {...register("genero")}>
-                        Outro
-                      </Radio>
-                    </HStack>
-                  </RadioGroup>
-                </FormControl>
-              </Box>
-            </HStack>
-            <HStack spacing="4" mb={2}>
-              <Box w="100%">
-                <FormControl>
-                  <FormLabel htmlFor="dataConsulta">Data da Consulta</FormLabel>
-                  <Input
-                    id="dataConsulta"
-                    type="date"
-                    {...register("dataConsulta")}
-                  />
-                  {errors && errors.dataConsulta && (
+                <FormControl mb={2}>
+                  <FormLabel htmlFor="dataNasc">Data de Nascimento</FormLabel>
+                  <Input id="dataNasc" type="date" {...register("dataNasc")} />
+                  {errors && errors.dataNasc && (
                     <FormHelperText color="red">
-                      {errors.dataConsulta.message &&
-                        errors.dataConsulta.message}
+                      {errors.dataNasc.message && errors.dataNasc.message}
                     </FormHelperText>
                   )}
                 </FormControl>
               </Box>
-              <Box w="100%">
-                <FormControl>
-                  <FormLabel htmlFor="Tefone">Especialidade</FormLabel>
-                  <Select
-                    placeholder="Selecione a especialidade"
-                    {...register("especialidade")}
-                    onChange={(e) => setIdEspecialidade(e.target.value)}
-                  >
-                    {comboEspecialidade.map((esp) => (
-                      <option key={esp.id} value={esp.id}>
-                        {esp.descricao}
-                      </option>
-                    ))}
-                  </Select>
-                  {errors && errors.especialidade && (
-                    <FormHelperText color="red">
-                      {errors.especialidade.message &&
-                        errors.especialidade.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Box>
-            </HStack>
-            <HStack spacing="4" mb={2}>
-              <Box w="100%">
-                <FormControl>
-                  <FormLabel htmlFor="endereco">Profissional</FormLabel>
-                  <Select
-                    placeholder="Selecione o profissional"
-                    {...register("profissional")}
-                    onChange={(e) => setIdProfissional(e.target.value)}
-                  >
-                    {comboProfissional.map((prof) => (
-                      <option key={prof.id} value={prof.id}>
-                        {prof.nome}
-                      </option>
-                    ))}
-                  </Select>
-                  {errors && errors.profissional && (
-                    <FormHelperText color="red">
-                      {errors.profissional.message &&
-                        errors.profissional.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Box>
-              <Box w="100%">
-                <FormControl>
-                  <FormLabel htmlFor="cidade">Unidade</FormLabel>
-                  <Select
-                    placeholder="Selecione a unidade"
-                    {...register("unidade")}
-                    onChange={(e) => setIdUnidade(e.target.value)}
-                  >
-                    {comboUnidade.map((unid) => (
-                      <option key={unid.id} value={unid.id}>
-                        {unid.descricao}
-                      </option>
-                    ))}
-                  </Select>
-                  {errors && errors.unidade && (
-                    <FormHelperText color="red">
-                      {errors.unidade.message && errors.unidade.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Box>
-            </HStack>
-            <HStack justify="center" mt={4}>
-              <Button
-                w={240}
-                p="6"
-                type="submit"
-                colorScheme="blue"
-                fontWeight="bold"
-                fontSize="xl"
-                mt="2"
-              >
-                Marcar Consulta
-              </Button>
-            </HStack>
-          </form>
-        </Center>
-      </Flex>
-    </Box>
+              <HStack spacing="4">
+                <Box w="100%">
+                  <FormControl mb={2}>
+                    <FormLabel htmlFor="numeroCelular">Celular</FormLabel>
+                    <InputGroup>
+                      <InputLeftAddon children="+55" />
+                      <Input
+                        id="numeroCelular"
+                        {...register("numeroCelular")}
+                      />
+                    </InputGroup>
+                    {errors && errors.numeroCelular && (
+                      <FormHelperText color="red">
+                        {errors.numeroCelular.message &&
+                          errors.numeroCelular.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Box>
+                <Box w="100%">
+                  <FormControl>
+                    <FormLabel>Gênero</FormLabel>
+                    <RadioGroup defaultValue="Masculino">
+                      <HStack spacing="24px">
+                        <Radio
+                          id="genero"
+                          value="Masculino"
+                          {...register("genero")}
+                        >
+                          Masculino
+                        </Radio>
+                        <Radio
+                          id="genero"
+                          value="Feminino"
+                          {...register("genero")}
+                        >
+                          Feminino
+                        </Radio>
+                        <Radio
+                          id="genero"
+                          value="Outro"
+                          {...register("genero")}
+                        >
+                          Outro
+                        </Radio>
+                      </HStack>
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
+              </HStack>
+              <HStack spacing="4" mb={2}>
+                <Box w="100%">
+                  <FormControl>
+                    <FormLabel htmlFor="dataConsulta">
+                      Data da Consulta
+                    </FormLabel>
+                    <Input
+                      id="dataConsulta"
+                      type="datetime-local"
+                      {...register("dataConsulta")}
+                    />
+                    {errors && errors.dataConsulta && (
+                      <FormHelperText color="red">
+                        {errors.dataConsulta.message &&
+                          errors.dataConsulta.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Box>
+                <Box w="100%">
+                  <FormControl>
+                    <FormLabel htmlFor="Tefone">Especialidade</FormLabel>
+                    <Select
+                      placeholder="Selecione a especialidade"
+                      {...register("especialidade")}
+                      onChange={(e) => setIdEspecialidade(e.target.value)}
+                    >
+                      {comboEspecialidade.map((esp) => (
+                        <option key={esp.id} value={esp.id}>
+                          {esp.descricao}
+                        </option>
+                      ))}
+                    </Select>
+                    {errors && errors.especialidade && (
+                      <FormHelperText color="red">
+                        {errors.especialidade.message &&
+                          errors.especialidade.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Box>
+              </HStack>
+              <HStack spacing="4" mb={2}>
+                <Box w="100%">
+                  <FormControl>
+                    <FormLabel htmlFor="endereco">Profissional</FormLabel>
+                    <Select
+                      placeholder="Selecione o profissional"
+                      {...register("profissional")}
+                      onChange={(e) => setIdProfissional(e.target.value)}
+                    >
+                      {comboProfissional.map((prof) => (
+                        <option key={prof.id} value={prof.id}>
+                          {prof.nome}
+                        </option>
+                      ))}
+                    </Select>
+                    {errors && errors.profissional && (
+                      <FormHelperText color="red">
+                        {errors.profissional.message &&
+                          errors.profissional.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Box>
+                <Box w="100%">
+                  <FormControl>
+                    <FormLabel htmlFor="cidade">Unidade</FormLabel>
+                    <Select
+                      placeholder="Selecione a unidade"
+                      {...register("unidade")}
+                      onChange={(e) => setIdUnidade(e.target.value)}
+                    >
+                      {comboUnidade.map((unid) => (
+                        <option key={unid.id} value={unid.id}>
+                          {unid.descricao}
+                        </option>
+                      ))}
+                    </Select>
+                    {errors && errors.unidade && (
+                      <FormHelperText color="red">
+                        {errors.unidade.message && errors.unidade.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Box>
+              </HStack>
+              <HStack justify="center" mt={4}>
+                <Button
+                  w={240}
+                  p="6"
+                  type="submit"
+                  colorScheme="blue"
+                  fontWeight="bold"
+                  fontSize="xl"
+                  mt="2"
+                >
+                  Marcar Consulta
+                </Button>
+              </HStack>
+            </form>
+          </Center>
+        </Flex>
+      </Box>
+    </>
   );
 }
