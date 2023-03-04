@@ -18,6 +18,7 @@ import ModalYesNo from "@/components/ModalYesNo";
 import HeadPage from "@/components/HeadPage";
 import Link from "next/link";
 import api from "../services/api";
+import { TEXT_BUTTON_MARCAR_CONSULTA } from "@/utils/strings";
 
 export default function Home() {
   const [consultas, setConsultas] = useState<any[]>([]);
@@ -73,10 +74,10 @@ export default function Home() {
             display="flex"
             justifyContent="center"
           >
-            <Link href="/marcarConsulta">
+            <Link href="/MarcarConsulta">
               <Button colorScheme="blue">
                 <CalendarIcon mr={2} />
-                Marcar Consulta
+                {TEXT_BUTTON_MARCAR_CONSULTA}
               </Button>
             </Link>
           </GridItem>

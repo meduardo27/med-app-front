@@ -12,24 +12,20 @@ import {
   Select,
   FormHelperText,
   useToast,
-  Text,
   InputGroup,
   InputLeftAddon,
 } from "@chakra-ui/react";
-
-import Router from "next/router";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { DEFAULT_MESSAGE, TEXT_BUTTON_MARCAR_CONSULTA } from "@/utils/strings";
+import HeadPage from "@/components/HeadPage";
+import Router from "next/router";
+import api from "@/services/api";
 import * as yup from "yup";
 
-import api from "@/services/api";
-import HeadPage from "@/components/HeadPage";
-
 export default function MarcarConsulta() {
-  const DEFAULT_MESSAGE = "Campo Obrigatório";
-
   const initValues = {
     nome: "",
     dataNasc: "",
@@ -311,6 +307,7 @@ export default function MarcarConsulta() {
               </HStack>
               <HStack justify="center" mt={4}>
                 <Button
+                  leftIcon={<CheckCircleIcon />}
                   w={240}
                   p="6"
                   type="submit"
@@ -319,7 +316,7 @@ export default function MarcarConsulta() {
                   fontSize="xl"
                   mt="2"
                 >
-                  Marcar Consulta
+                  {TEXT_BUTTON_MARCAR_CONSULTA}
                 </Button>
               </HStack>
             </form>

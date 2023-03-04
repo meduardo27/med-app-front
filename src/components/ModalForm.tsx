@@ -20,10 +20,11 @@ import {
   Select,
   useToast,
 } from "@chakra-ui/react";
-import Router from "next/router";
-import { createElement, useEffect, useState } from "react";
+import { CheckCircleIcon } from "@chakra-ui/icons";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Router from "next/router";
 import api from "@/services/api";
 
 import * as yup from "yup";
@@ -54,9 +55,13 @@ export default function ModalForm({
   const [comboEspecialidade, setFieldEspecialidade] = useState<any[]>([]);
   const [comboUnidade, setFieldUnidade] = useState<any[]>([]);
   const [comboProfissional, setFieldProfissional] = useState<any[]>([]);
-  const [idEspecialidade, setIdEspecialidade] = useState<any>([]);
-  const [idUnidade, setIdUnidade] = useState<any>([]);
-  const [idProfissional, setIdProfissional] = useState<any>([]);
+  const [idEspecialidade, setIdEspecialidade] = useState<any>(
+    dataEdit.consulta.especialidade.id
+  );
+  const [idUnidade, setIdUnidade] = useState<any>(dataEdit.consulta.unidade.id);
+  const [idProfissional, setIdProfissional] = useState<any>(
+    dataEdit.consulta.profissional.id
+  );
   const toast = useToast();
 
   const schema = yup.object().shape({
@@ -301,8 +306,10 @@ export default function ModalForm({
                   <FormLabel htmlFor="especialidade">Especialidade</FormLabel>
                   <Select
                     placeholder="Selecione a especialidade"
-                    {...register("especialidade")}
-                    value={dataEdit.consulta.especialidade.id}
+                    {...register("especialidade", {
+                      value: dataEdit.consulta.profissional.id,
+                    })}
+                    value={idEspecialidade}
                     onChange={(e) => {
                       console.log(e.target.value);
                       setIdEspecialidade(e.target.value);
@@ -329,9 +336,9 @@ export default function ModalForm({
                     <Select
                       placeholder="Selecione o profissional"
                       {...register("profissional", {
-                        value: dataEdit.consulta.profissional,
+                        value: dataEdit.consulta.profissional.id,
                       })}
-                      value={dataEdit.consulta.profissional.id}
+                      value={idProfissional}
                       onChange={(e) => setIdProfissional(e.target.value)}
                     >
                       {comboProfissional.map((prof) => (
@@ -356,7 +363,7 @@ export default function ModalForm({
                       {...register("unidade", {
                         value: dataEdit.consulta.unidade.id,
                       })}
-                      value={dataEdit.consulta.unidade.id}
+                      value={idUnidade}
                       onChange={(e) => setIdUnidade(e.target.value)}
                     >
                       {comboUnidade.map((unid) => (
@@ -375,6 +382,7 @@ export default function ModalForm({
               </HStack>
               <HStack justify="center" mt={4}>
                 <Button
+                  leftIcon={<CheckCircleIcon />}
                   w={240}
                   p="6"
                   type="submit"

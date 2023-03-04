@@ -1,10 +1,11 @@
-import { Box, Center, Container } from "@chakra-ui/react";
+import { TEXT_FOOTER } from "@/utils/strings";
+import { Box, Center } from "@chakra-ui/react";
 
 export default function Footer() {
   return (
     <Box>
       <Center bg="#10498f" w="100%" h="100px" color="white">
-        2023 - Projeto criado por Mateus Eduardo para avaliação
+        {TEXT_FOOTER}
       </Center>
     </Box>
   );

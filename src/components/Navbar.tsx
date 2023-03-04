@@ -1,31 +1,31 @@
-import { ArrowRightIcon, ChatIcon } from "@chakra-ui/icons";
 import {
   Box,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Menu,
-  MenuButton,
+  HStack,
   Text,
 } from "@chakra-ui/react";
+import { ArrowRightIcon, ChatIcon } from "@chakra-ui/icons";
+import Logo from "@/assets/logo-clinica.png";
+import { TITLE_PAGE } from "@/utils/strings";
 
 export default function Navbar() {
   return (
     <Box h="100px" bg="#10498f" color="white" padding={2}>
-      <Text fontSize="3xl" paddingBottom={5}>
-        <ArrowRightIcon /> Clínica Médica Paraná
-      </Text>
+      <HStack mb={2}>
+        <img width={40} src={Logo.src} />
+        <Text fontSize="3xl">{TITLE_PAGE}</Text>
+      </HStack>
       <Breadcrumb>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">
-            <ArrowRightIcon />
-            {" "}Home
+            <ArrowRightIcon /> Home
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink href="/sobre">
-            <ChatIcon />
-            {" "}Sobre
+            <ChatIcon /> Sobre
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
