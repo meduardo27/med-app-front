@@ -106,12 +106,7 @@ export default function MarcarConsulta() {
   const handleCreate = async (data: any) => {
     try {
       await api.post(
-        "/consultas/" +
-          idEspecialidade +
-          "/" +
-          idUnidade +
-          "/" +
-          idProfissional,
+        `/consultas/${idEspecialidade}/${idUnidade}/${idProfissional}`,
         data
       );
       Router.push("/");

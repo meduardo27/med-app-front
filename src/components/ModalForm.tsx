@@ -152,14 +152,7 @@ export default function ModalForm({
   const handleUpdate = async (data: any) => {
     try {
       await api.put(
-        "/consultas/" +
-          dataEdit.consulta.id +
-          "/" +
-          idEspecialidade +
-          "/" +
-          idUnidade +
-          "/" +
-          idProfissional,
+        `/consultas/${dataEdit.consulta.id}/${idEspecialidade}/${idUnidade}/${idProfissional}`,
         data
       );
       onClose();

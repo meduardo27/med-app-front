@@ -24,7 +24,7 @@ export default function Navbar() {
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/sobre">
+          <BreadcrumbLink href="/Sobre">
             <ChatIcon /> Sobre
           </BreadcrumbLink>
         </BreadcrumbItem>
