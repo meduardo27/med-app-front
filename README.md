@@ -6,7 +6,7 @@ O projeto foi criado com o objetivo de criar marcação de consulta médica.
 
 ## Stack utilizada
 
-**Front-end:** ReactJS, NextJS, Chakra UI
+**Front-end:** ReactJS, NextJS, React Hook Form, Chakra UI
 
 
 ## Documentação da API
