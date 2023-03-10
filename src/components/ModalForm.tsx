@@ -93,7 +93,10 @@ export default function ModalForm({
       const data = response.data;
       setFieldEspecialidade(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
 
@@ -103,7 +106,10 @@ export default function ModalForm({
       const data = response.data;
       setFieldUnidade(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
   const getProfissionais = async () => {
@@ -112,7 +118,10 @@ export default function ModalForm({
       const data = response.data;
       setFieldProfissional(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
 
@@ -166,7 +175,10 @@ export default function ModalForm({
       });
       Router.reload();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
 
@@ -304,7 +316,6 @@ export default function ModalForm({
                     })}
                     value={idEspecialidade}
                     onChange={(e) => {
-                      console.log(e.target.value);
                       setIdEspecialidade(e.target.value);
                     }}
                   >

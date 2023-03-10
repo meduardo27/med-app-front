@@ -8,6 +8,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Toast,
+  useToast,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useState } from "react";
@@ -24,6 +25,7 @@ export default function ModalYesNo({
 }: any) {
   const [consultaId, setConsultaId] = useState(dataEdit.consulta.id);
   const dtConsulta = new Date(dataEdit.consulta.dataConsulta);
+  const toast = useToast();
 
   const handleDelete = async () => {
     try {
@@ -39,7 +41,10 @@ export default function ModalYesNo({
       Router.reload();
       onClose();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
 
