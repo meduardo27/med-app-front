@@ -5,6 +5,7 @@ import {
   GridItem,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import {
   CalendarIcon,
@@ -26,6 +27,7 @@ export default function Home() {
   const [data, setData] = useState([]);
   const [dataEdit, setDataEdit] = useState({});
   const [edit, setEdit] = useState(Boolean);
+  const toast = useToast();
 
   const getConsultas = async () => {
     try {
@@ -34,7 +36,10 @@ export default function Home() {
       setConsultas(data);
       setData(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
 

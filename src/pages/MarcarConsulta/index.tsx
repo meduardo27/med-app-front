@@ -74,7 +74,10 @@ export default function MarcarConsulta() {
       const data = response.data;
       setFieldEspecialidade(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
 
@@ -84,7 +87,10 @@ export default function MarcarConsulta() {
       const data = response.data;
       setFieldUnidade(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
   const getProfissionais = async () => {
@@ -93,7 +99,10 @@ export default function MarcarConsulta() {
       const data = response.data;
       setFieldProfissional(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
   };
 
@@ -119,9 +128,11 @@ export default function MarcarConsulta() {
         isClosable: true,
       });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error}`,
+        status: "error",
+      });
     }
-    console.log(data);
   };
 
   return (
